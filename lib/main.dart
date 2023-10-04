@@ -1,8 +1,14 @@
+// import 'dart:js';
+
+import 'package:e_commers/controllers/mainscreen_provider.dart';
 import 'package:e_commers/screens/Mainscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => MainScreenNotifier())
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
