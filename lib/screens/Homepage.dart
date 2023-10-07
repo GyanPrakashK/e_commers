@@ -1,4 +1,5 @@
 // import 'package:e_commers/Shared/appstyl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commers/Shared/appstyl.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -70,58 +71,102 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Padding(
             padding: EdgeInsets.only(
                 top: MediaQuery.of(context).size.height * 0.265),
-            child: TabBarView(controller: _tabController, children: [
-              Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.405,
-                    color: Colors.amber,
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Latest Show",
-                            style: appstyle(24, Colors.black, FontWeight.bold),
-                          ),
-                          Row(
+            child: Container(
+              padding: const EdgeInsets.only(left: 12),
+              child: TabBarView(controller: _tabController, children: [
+                Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.405,
+                      child: ListView.builder(
+                        itemCount: 6,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              color: Colors.grey,
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width * .6,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 20, 12, 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 "Latest Show",
                                 style:
-                                    appstyle(22, Colors.black, FontWeight.w500),
+                                    appstyle(24, Colors.black, FontWeight.bold),
                               ),
-                              Icon(
-                                Ionicons.caret_forward,
-                                size: 20,
-                              )
+                              Row(
+                                children: [
+                                  Text(
+                                    "Show All",
+                                    style: appstyle(
+                                        22, Colors.black, FontWeight.w500),
+                                  ),
+                                  Icon(
+                                    Ionicons.caret_forward,
+                                    size: 20,
+                                  )
+                                ],
+                              ),
                             ],
                           ),
-                        ],
-                      )
-                    ],
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.405,
-                    color: Color.fromARGB(255, 3, 190, 31),
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.405,
-                    color: Color.fromARGB(255, 82, 11, 205),
-                  )
-                ],
-              )
-            ]),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.13,
+                      child: ListView.builder(
+                        itemCount: 6,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(16))),
+                              height: MediaQuery.of(context).size.height * .12,
+                              width: MediaQuery.of(context).size.width * .28,
+                              child: CachedNetworkImage(
+                              
+                                  imageUrl:
+                                      "https://d326fntlu7tb1e.cloudfront.net/uploads/58282ea3-b815-4d26-9f4f-382aa62f67cf-HP5404_a1.webp"),
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.405,
+                      color: Color.fromARGB(255, 3, 190, 31),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.405,
+                      color: Color.fromARGB(255, 82, 11, 205),
+                    )
+                  ],
+                )
+              ]),
+            ),
           )
         ],
       ),
