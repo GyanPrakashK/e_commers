@@ -73,7 +73,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 top: MediaQuery.of(context).size.height * 0.265),
             child: Container(
               padding: const EdgeInsets.only(left: 12),
-              child: TabBarView(controller: _tabController, children: [
+              child: TabBarView(
+                controller: _tabController, 
+                children: [
                 Column(
                   children: [
                     SizedBox(
@@ -139,7 +141,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               height: MediaQuery.of(context).size.height * .12,
                               width: MediaQuery.of(context).size.width * .28,
                               child: CachedNetworkImage(
-                              
                                   imageUrl:
                                       "https://d326fntlu7tb1e.cloudfront.net/uploads/58282ea3-b815-4d26-9f4f-382aa62f67cf-HP5404_a1.webp"),
                             ),
