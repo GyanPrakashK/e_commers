@@ -1,6 +1,7 @@
 // import 'package:e_commers/Shared/appstyl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commers/Shared/appstyl.dart';
+import 'package:e_commers/Shared/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -73,9 +74,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 top: MediaQuery.of(context).size.height * 0.265),
             child: Container(
               padding: const EdgeInsets.only(left: 12),
-              child: TabBarView(
-                controller: _tabController, 
-                children: [
+              child: TabBarView(controller: _tabController, children: [
                 Column(
                   children: [
                     SizedBox(
@@ -84,14 +83,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         itemCount: 6,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              color: Colors.grey,
-                              height: MediaQuery.of(context).size.height,
-                              width: MediaQuery.of(context).size.width * .6,
-                            ),
-                          );
+                          return ProductCard(
+                              price: "\$99",
+                              category: "Men's shoes",
+                              id: '1',
+                              name: "Adidas",
+                              image:
+                                  "https://d326fntlu7tb1e.cloudfront.net/uploads/58282ea3-b815-4d26-9f4f-382aa62f67cf-HP5404_a1.webp");
                         },
                       ),
                     ),
@@ -117,7 +115,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   Icon(
                                     Ionicons.caret_forward,
                                     size: 20,
-                                  )
+                                  ),
                                 ],
                               ),
                             ],
@@ -135,6 +133,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               decoration: const BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black45,
+                                        spreadRadius: 1,
+                                        blurRadius: 0.8,
+                                        offset: Offset(0, 1))
+                                  ],
                                   color: Colors.white,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(16))),
