@@ -30,6 +30,7 @@ class _MainScreenState extends State<MainScreen> {
     return Consumer<MainScreenNotifier>(
         builder: (context, mainScreenNotifier, child) {
       return Scaffold(
+        backgroundColor: const Color(0xFFE2E2E2),
         body: pageList[mainScreenNotifier.pageIndex],
         bottomNavigationBar: const BottomNavi(),
       );

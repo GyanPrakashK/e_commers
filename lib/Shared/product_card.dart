@@ -46,7 +46,7 @@ class _ProductCardState extends State<ProductCard> {
               Stack(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.23,
+                    height: MediaQuery.of(context).size.height * 0.24,
                     decoration: BoxDecoration(
                       image: DecorationImage(image: NetworkImage(widget.image)),
                     ),
@@ -68,7 +68,7 @@ class _ProductCardState extends State<ProductCard> {
                     Text(
                       widget.name,
                       style: appstylewithHT(
-                          36, Colors.black, FontWeight.bold, 1.1),
+                          30, Colors.black, FontWeight.bold, 1.1),
                     ),
                     Text(
                       widget.category,
@@ -85,7 +85,7 @@ class _ProductCardState extends State<ProductCard> {
                   children: [
                     Text(
                       widget.price,
-                      style: appstyle(30, Colors.black, FontWeight.w600),
+                      style: appstyle(25, Colors.black, FontWeight.w600),
                     ),
                     Row(
                       children: [
@@ -96,9 +96,11 @@ class _ProductCardState extends State<ProductCard> {
                         SizedBox(
                           width: 5,
                         ),
-                        ChoiceChip(label: Text(""), selected: selected,
-                        visualDensity: VisualDensity.compact,
-                        selectedColor: Colors.black,
+                        ChoiceChip(
+                          label: Text(""),
+                          selected: selected,
+                          visualDensity: VisualDensity.compact,
+                          selectedColor: Colors.black,
                         )
                       ],
                     )
