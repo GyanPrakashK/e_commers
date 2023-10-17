@@ -1,8 +1,8 @@
-
 import 'package:e_commers/Models/sneakers_models.dart';
 import 'package:e_commers/Shared/appstyl.dart';
 import 'package:e_commers/Shared/new_shoes.dart';
 import 'package:e_commers/Shared/product_card.dart';
+import 'package:e_commers/screens/product_by_card.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -23,8 +23,7 @@ class HomePageWidget extends StatelessWidget {
             child: FutureBuilder<List<Sneakers>>(
                 future: _male,
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text(
@@ -37,8 +36,7 @@ class HomePageWidget extends StatelessWidget {
                     return ListView.builder(
                       itemCount: male!.length,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder:
-                          (BuildContext context, int index) {
+                      itemBuilder: (BuildContext context, int index) {
                         final shoe = snapshot.data![index];
                         return ProductCard(
                           price: "\$${shoe.price}",
@@ -54,23 +52,25 @@ class HomePageWidget extends StatelessWidget {
         Column(
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.fromLTRB(12, 20, 12, 20),
+              padding: const EdgeInsets.fromLTRB(12, 20, 12, 20),
               child: Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Latest Show",
-                    style: appstyle(
-                        24, Colors.black, FontWeight.bold),
+                    style: appstyle(24, Colors.black, FontWeight.bold),
                   ),
                   Row(
                     children: [
-                      Text(
-                        "Show All",
-                        style: appstyle(
-                            22, Colors.black, FontWeight.w500),
+                      InkWell(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProductByCard())),
+                        child: Text(
+                          "Show All",
+                          style: appstyle(22, Colors.black, FontWeight.w500),
+                        ),
                       ),
                       Icon(
                         Ionicons.caret_forward,
@@ -88,8 +88,7 @@ class HomePageWidget extends StatelessWidget {
           child: FutureBuilder<List<Sneakers>>(
               future: _male,
               builder: (context, snapshot) {
-                if (snapshot.connectionState ==
-                    ConnectionState.waiting) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text(
@@ -102,12 +101,10 @@ class HomePageWidget extends StatelessWidget {
                   return ListView.builder(
                     itemCount: male!.length,
                     scrollDirection: Axis.horizontal,
-                    itemBuilder:
-                        (BuildContext context, int index) {
+                    itemBuilder: (BuildContext context, int index) {
                       final shoe = snapshot.data![index];
                       return Padding(
-                        padding:
-                            const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.only(right: 10),
                         child: NewShoes(
                           imageurl: shoe.imageUrl[1],
                         ),

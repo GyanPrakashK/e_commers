@@ -1,14 +1,14 @@
 // import 'package:e_commers/Shared/appstyl.dart';
 
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commers/Models/sneakers_models.dart';
 import 'package:e_commers/Servicers/helper.dart';
 import 'package:e_commers/Shared/appstyl.dart';
 import 'package:e_commers/Shared/home_pageWidget.dart';
-import 'package:e_commers/Shared/new_shoes.dart';
-import 'package:e_commers/Shared/product_card.dart';
+// import 'package:e_commers/Shared/new_shoes.dart';
+// import 'package:e_commers/Shared/product_card.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+// import 'package:ionicons/ionicons.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

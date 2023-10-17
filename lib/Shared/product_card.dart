@@ -56,7 +56,7 @@ class _ProductCardState extends State<ProductCard> {
                       top: 10,
                       child: GestureDetector(
                         onTap: null,
-                        child: Icon(Ionicons.heart_circle_outline),
+                        child: Icon(Ionicons.heart_outline),
                       )),
                 ],
               ),
