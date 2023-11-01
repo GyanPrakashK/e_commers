@@ -108,9 +108,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 child: Container(
                   padding: const EdgeInsets.only(left: 12),
                   child: TabBarView(controller: _tabController, children: [
-                    HomePageWidget(male: _male),
-                    HomePageWidget(male: _female),
-                    HomePageWidget(male: _kids),
+                    HomePageWidget(
+                      male: _male,
+                      tabindex: 0,
+                    ),
+                    HomePageWidget(
+                      male: _female,
+                      tabindex: 1,
+                    ),
+                    HomePageWidget(
+                      male: _kids,
+                     tabindex: 2,
+                    ),
                   ]),
                 ),
               )

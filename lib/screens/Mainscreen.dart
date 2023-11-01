@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> pageList = const [
     HomePage(),
     SearchPage(),
-    ProductByCard(),
+    HomePage(),
     CardPage(),
     ProfilePage(),
   ];

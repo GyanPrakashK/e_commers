@@ -2,6 +2,7 @@ import 'package:e_commers/Models/sneakers_models.dart';
 import 'package:e_commers/Shared/appstyl.dart';
 import 'package:e_commers/Shared/new_shoes.dart';
 import 'package:e_commers/Shared/product_card.dart';
+import 'package:e_commers/screens/Product_page.dart';
 import 'package:e_commers/screens/product_by_card.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -10,9 +11,11 @@ class HomePageWidget extends StatelessWidget {
   const HomePageWidget({
     super.key,
     required Future<List<Sneakers>> male,
+    required this.tabindex,
   }) : _male = male;
 
   final Future<List<Sneakers>> _male;
+  final int tabindex;
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +41,21 @@ class HomePageWidget extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
                         final shoe = snapshot.data![index];
-                        return ProductCard(
-                          price: "\$${shoe.price}",
-                          category: shoe.category,
-                          id: shoe.id,
-                          name: shoe.name,
-                          image: shoe.imageUrl[0],
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProductPage(
+                                        id: shoe.id, category: shoe.category)));
+                          },
+                          child: ProductCard(
+                            price: "\$${shoe.price}",
+                            category: shoe.category,
+                            id: shoe.id,
+                            name: shoe.name,
+                            image: shoe.imageUrl[0],
+                          ),
                         );
                       },
                     );
@@ -60,23 +72,25 @@ class HomePageWidget extends StatelessWidget {
                     "Latest Show",
                     style: appstyle(24, Colors.black, FontWeight.bold),
                   ),
-                  Row(
-                    children: [
-                      InkWell(
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProductByCard())),
-                        child: Text(
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductByCard(
+                                  tabindex: tabindex,
+                                ))),
+                    child: Row(
+                      children: [
+                        Text(
                           "Show All",
                           style: appstyle(22, Colors.black, FontWeight.w500),
                         ),
-                      ),
-                      Icon(
-                        Ionicons.caret_forward,
-                        size: 20,
-                      ),
-                    ],
+                        Icon(
+                          Ionicons.caret_forward,
+                          size: 20,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
