@@ -2,10 +2,12 @@ import 'package:e_commers/Models/sneakers_models.dart';
 import 'package:e_commers/Shared/appstyl.dart';
 import 'package:e_commers/Shared/new_shoes.dart';
 import 'package:e_commers/Shared/product_card.dart';
+import 'package:e_commers/controllers/product_providder.dart';
 import 'package:e_commers/screens/Product_page.dart';
 import 'package:e_commers/screens/product_by_card.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 
 class HomePageWidget extends StatelessWidget {
   const HomePageWidget({
@@ -19,6 +21,7 @@ class HomePageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var productNotifer = Provider.of<ProductNotifer>(context);
     return Column(
       children: [
         SizedBox(
@@ -43,6 +46,8 @@ class HomePageWidget extends StatelessWidget {
                         final shoe = snapshot.data![index];
                         return GestureDetector(
                           onTap: () {
+                            productNotifer.shoesSize = shoe.sizes;
+                            print(productNotifer.shoesSize);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
