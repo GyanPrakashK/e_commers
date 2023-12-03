@@ -230,7 +230,7 @@ class _ProductPageState extends State<ProductPage> {
                                                 ],
                                               ),
                                               SizedBox(
-                                                height: 20,
+                                                height: 15,
                                               ),
                                               Row(
                                                 mainAxisAlignment:
@@ -271,7 +271,7 @@ class _ProductPageState extends State<ProductPage> {
                                                 ],
                                               ),
                                               SizedBox(
-                                                height: 20,
+                                                height: 13,
                                               ),
                                               Column(
                                                 children: [
@@ -390,25 +390,25 @@ class _ProductPageState extends State<ProductPage> {
                                                 child: Text(
                                                   sneaker.title,
                                                   style: appstyle(
-                                                      25,
+                                                      21.5,
                                                       Colors.black,
                                                       FontWeight.w700),
                                                 ),
                                               ),
                                               SizedBox(
-                                                height: 10,
+                                                height: 9,
                                               ),
                                               Text(
                                                 sneaker.description,
                                                 textAlign: TextAlign.justify,
-                                                maxLines: 4,
+                                                maxLines: 5,
                                                 style: appstyle(
-                                                    14,
+                                                    12.8,
                                                     Colors.black,
                                                     FontWeight.normal),
                                               ),
                                               SizedBox(
-                                                height: 10,
+                                                height: 4,
                                               ),
                                               Align(
                                                 alignment:
@@ -429,12 +429,12 @@ class _ProductPageState extends State<ProductPage> {
                                                                     .all(Radius
                                                                         .circular(
                                                                             12))),
-                                                        height: 27,
+                                                        height: 40,
                                                         width: MediaQuery.of(
                                                                     context)
                                                                 .size
                                                                 .width *
-                                                            0.9,
+                                                            0.8,
                                                         child: Center(
                                                           child: Text(
                                                             "Add to bag",
