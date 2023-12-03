@@ -5,6 +5,7 @@ import 'package:e_commers/Models/sneakers_models.dart';
 import 'package:e_commers/Servicers/helper.dart';
 import 'package:e_commers/Shared/appstyl.dart';
 import 'package:e_commers/controllers/product_providder.dart';
+import 'package:e_commers/screens/CheckOut_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:ionicons/ionicons.dart';
@@ -416,37 +417,9 @@ class _ProductPageState extends State<ProductPage> {
                                                 child: Padding(
                                                   padding:
                                                       EdgeInsets.only(top: 12),
-                                                  child: GestureDetector(
-                                                    onTap: () {},
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.all(8),
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                            color: Colors.black,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            12))),
-                                                        height: 40,
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.8,
-                                                        child: Center(
-                                                          child: Text(
-                                                            "Add to bag",
-                                                            style: appstyle(
-                                                                20,
-                                                                Colors.white,
-                                                                FontWeight
-                                                                    .bold),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
+                                                  child: CheckOutButton(
+                                                    onTab: null,
+                                                    lable: 'Add to card',
                                                   ),
                                                 ),
                                               )
