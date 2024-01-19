@@ -55,7 +55,7 @@ class HomePageWidget extends StatelessWidget {
                                         id: shoe.id, category: shoe.category)));
                           },
                           child: ProductCard(
-                            price: "\$${shoe.price}",
+                            price: "\₹${shoe.price}",
                             category: shoe.category,
                             id: shoe.id,
                             name: shoe.name,

@@ -4,16 +4,21 @@ import 'package:e_commers/Shared/CategoryBtn.dart';
 import 'package:e_commers/Shared/Custom_spacer.dart';
 import 'package:e_commers/Shared/appstyl.dart';
 import 'package:e_commers/Shared/latest_shoe.dart';
+import 'package:e_commers/controllers/product_providder.dart';
 // import 'package:e_commers/Shared/stagger_tile.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 // import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 // import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
 class ProductByCard extends StatefulWidget {
-  const ProductByCard({super.key, required this.tabindex, });
+  const ProductByCard({
+    super.key,
+    required this.tabindex,
+  });
 
   final int tabindex;
 
@@ -30,25 +35,32 @@ class _ProductByCardState extends State<ProductByCard>
   late Future<List<Sneakers>> _female;
   late Future<List<Sneakers>> _kids;
 
-  void getMale() {
-    _male = Helper().getMaleSneakers();
-  }
+  // void getMale() {
+  //   _male = Helper().getMaleSneakers();
+  // }
 
-  void getFemale() {
-    _female = Helper().getFemaleSneakers();
-  }
+  // void getFemale() {
+  //   _female = Helper().getFemaleSneakers();
+  // }
 
-  void getKids() {
-    _kids = Helper().getKidsSneakers();
-  }
+  // void getKids() {
+  //   _kids = Helper().getKidsSneakers();
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getMale();
-    getKids();
-    getFemale();
+    _tabController.animateTo(widget.tabindex, curve: Curves.easeIn);
+    // getMale();
+    // getKids();
+    // getFemale();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   List<String> brand = [
@@ -60,6 +72,10 @@ class _ProductByCardState extends State<ProductByCard>
 
   @override
   Widget build(BuildContext context) {
+    var productNotifer = Provider.of<ProductNotifer>(context);
+    productNotifer.getFemale();
+    productNotifer.getKids();
+    productNotifer.getMale();
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
       body: SizedBox(
@@ -133,9 +149,9 @@ class _ProductByCardState extends State<ProductByCard>
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: TabBarView(controller: _tabController, children: [
-                  malelatestshoes(male: _male),
-                  malelatestshoes(male: _female),
-                  malelatestshoes(male: _kids),
+                  malelatestshoes(male: productNotifer.male),
+                  malelatestshoes(male: productNotifer.female),
+                  malelatestshoes(male: productNotifer.kids),
                 ]),
               ),
             )

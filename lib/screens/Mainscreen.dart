@@ -1,6 +1,7 @@
 // import 'package:e_commers/Shared/Botom_navi_Widget.dart';
 // import 'package:e_commers/Shared/appstyl.dart';
 import 'package:e_commers/Shared/bottom_navi.dart';
+import 'package:e_commers/Shared/favorites.dart';
 import 'package:e_commers/controllers/mainscreen_provider.dart';
 import 'package:e_commers/screens/CartPage.dart';
 import 'package:e_commers/screens/Homepage.dart';
@@ -19,10 +20,10 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List<Widget> pageList = const [
+  List<Widget> pageList = [
     HomePage(),
     SearchPage(),
-    HomePage(),
+    Favorites(),
     CardPage(),
     ProfilePage(),
   ];

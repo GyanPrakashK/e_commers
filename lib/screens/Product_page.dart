@@ -2,14 +2,21 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commers/Models/sneakers_models.dart';
+import 'package:e_commers/controllers/card_provider.dart';
+import 'package:e_commers/controllers/fave_notif.dart';
 import 'package:e_commers/Servicers/helper.dart';
 import 'package:e_commers/Shared/appstyl.dart';
+import 'package:e_commers/Shared/favorites.dart';
 import 'package:e_commers/controllers/product_providder.dart';
 import 'package:e_commers/screens/CheckOut_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
+
+import '../Models/constant.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.id, required this.category});
@@ -21,30 +28,62 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   final PageController pageController = PageController();
+  final _cardBox = Hive.box('cart_box');
+  final _favBox = Hive.box('fav_box');
 
-  late Future<Sneakers> _sneaker;
-  void getShoes() {
-    if (widget.category == "Men's Running") {
-      _sneaker = Helper().getMensSneakersById(widget.id);
-    } else if (widget.category == "Women's Running") {
-      _sneaker = Helper().getWomenSneakersById(widget.id);
-    } else {
-      _sneaker = Helper().getKidsSneakersById(widget.id);
-    }
+  // late Future<Sneakers> _sneaker;
+  // void getShoes() {
+  //   if (widget.category == "Men's Running") {
+  //     _sneaker = Helper().getMensSneakersById(widget.id);
+  //   } else if (widget.category == "Women's Running") {
+  //     _sneaker = Helper().getWomenSneakersById(widget.id);
+  //   } else {
+  //     _sneaker = Helper().getKidsSneakersById(widget.id);
+  //   }
+  // }
+
+  Future<void> _creatCard(Map<String, dynamic> newCard) async {
+    await _cardBox.add(newCard);
   }
 
-  @override
-  void initState() {
-// TODO: implement initState
-    super.initState();
-    getShoes();
-  }
+  // Future<void> _createFav(Map<String, dynamic> addFav) async {
+  //   await _favBox.add(addFav);
+  //   // getFavorites();
+  // }
+
+  // getFavorites() {
+  //   final favData = _favBox.keys.map((key) {
+  //     final item = _favBox.get(key);
+
+  //     return {
+  //       "key": key,
+  //       "id": item['id'],
+  //     };
+  //   }).toList();
+
+  //   favor = favData.toList();
+  //   ids = favor.map((item) => item['id']).toList();
+  //   setState(() {});
+  // }
+
+//   @override
+//   void initState() {
+// // TODO: implement initState
+//     super.initState();
+//     getShoes();
+//   }
 
   @override
   Widget build(BuildContext context) {
+    var productNotifer = Provider.of<ProductNotifer>(context);
+    productNotifer.getShoes(widget.category, widget.id);
+    var cartProvider = Provider.of<CartProvider>(context);
+    var favoritesNotifire =
+        Provider.of<FavoritesNotifier>(context, listen: true);
+    favoritesNotifire.getFavorites();
     return Scaffold(
         body: FutureBuilder<Sneakers>(
-            future: _sneaker,
+            future: productNotifer.sneaker,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return CircularProgressIndicator();
@@ -125,15 +164,56 @@ class _ProductPageState extends State<ProductPage> {
                                               ),
                                             ),
                                             Positioned(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    .25,
-                                                right: 20,
-                                                child: Icon(
-                                                  Ionicons.heart_outline,
-                                                  color: Colors.grey,
-                                                )),
+                                              top: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  .1,
+                                              right: 20,
+                                              child:
+                                                  Consumer<FavoritesNotifier>(
+                                                builder: (context,
+                                                    favoritesNotifire, child) {
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      if (favoritesNotifire.ids
+                                                          .contains(
+                                                              widget.id)) {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const Favorites()));
+                                                      } else {
+                                                        favoritesNotifire
+                                                            .createFav({
+                                                          "id": sneaker.id,
+                                                          "name": sneaker.name,
+                                                          "category":
+                                                              sneaker.category,
+                                                          "price":
+                                                              sneaker.price,
+                                                          "imageUrl": sneaker
+                                                              .imageUrl[0],
+                                                        });
+                                                      }
+                                                      setState(() {});
+                                                    },
+                                                    child: favoritesNotifire.ids
+                                                            .contains(
+                                                                sneaker.id)
+                                                        ? const Icon(
+                                                            Ionicons.heart)
+                                                        : const Icon(Ionicons
+                                                            .heart_outline),
+                                                  );
+                                                },
+                                              ),
+                                              // Icon(
+                                              //   Ionicons.heart_outline,
+                                              //   color: Colors.grey,
+                                              // )
+                                            ),
                                             Positioned(
                                                 bottom: 0,
                                                 right: 0,
@@ -329,8 +409,7 @@ class _ProductPageState extends State<ProductPage> {
                                                                             60),
                                                                     side:
                                                                         BorderSide(
-                                                                      color: Colors
-                                                                          .black,
+                                                                      color: const Color.fromARGB(255, 220, 187, 187),
                                                                       width: 1,
                                                                       style: BorderStyle
                                                                           .solid,
@@ -355,12 +434,28 @@ class _ProductPageState extends State<ProductPage> {
                                                                 .symmetric(
                                                                     vertical:
                                                                         8),
-                                                            selected: productNotifer
-                                                                        .shoesSize[
-                                                                    index]
-                                                                ["isSelected"],
+                                                            selected: sizes[
+                                                                "isSelected"],
                                                             onSelected:
                                                                 (nweState) {
+                                                              if (productNotifer
+                                                                  .sizes
+                                                                  .contains(sizes[
+                                                                      'size'])) {
+                                                                productNotifer
+                                                                    .sizes
+                                                                    .remove(sizes[
+                                                                        'size']);
+                                                              } else {
+                                                                productNotifer
+                                                                    .sizes
+                                                                    .add(sizes[
+                                                                        'size']);
+                                                              }
+                                                              print(
+                                                                  productNotifer
+                                                                      .sizes);
+
                                                               productNotifer
                                                                   .toggleCheck(
                                                                       index);
@@ -418,7 +513,22 @@ class _ProductPageState extends State<ProductPage> {
                                                   padding:
                                                       EdgeInsets.only(top: 12),
                                                   child: CheckOutButton(
-                                                    onTab: null,
+                                                    onTab: () async {
+                                                      _creatCard({
+                                                        "id": sneaker.id,
+                                                        "name": sneaker.name,
+                                                        "category":
+                                                            sneaker.category,
+                                                        "sizes": sneaker.sizes,
+                                                        "imageUrl":
+                                                            sneaker.imageUrl[0],
+                                                        "price": sneaker.price,
+                                                        "qty": 1,
+                                                      });
+                                                      productNotifer.sizes
+                                                          .clear();
+                                                      Navigator.pop(context);
+                                                    },
                                                     lable: 'Add to card',
                                                   ),
                                                 ),

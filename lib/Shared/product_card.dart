@@ -1,6 +1,11 @@
+import 'package:e_commers/Models/constant.dart';
 import 'package:e_commers/Shared/appstyl.dart';
+import 'package:e_commers/Shared/favorites.dart';
+import 'package:e_commers/controllers/fave_notif.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard(
@@ -21,17 +26,41 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  bool selected = true;
+  final _favBox = Hive.box('fav_box');
+  // Future<void> _createFav(Map<String, dynamic> addFav) async {
+  //   await _favBox.add(addFav);
+  //   getFavorites();
+  // }
+
+  // getFavorites() {
+  //   final favData = _favBox.keys.map((key) {
+  //     final item = _favBox.get(key);
+
+  //     return {
+  //       "key": key,
+  //       "id": item['id'],
+  //     };
+  //   }).toList();
+
+  //   favor = favData.toList();
+  //   ids = favor.map((item) => item['id']).toList();
+  //   setState(() {});
+  // }
+
   @override
   Widget build(BuildContext context) {
+    var favoritesNotifire =
+        Provider.of<FavoritesNotifier>(context, listen: true);
+    favoritesNotifire.getFavorites();
+    bool selected = true;
     return Padding(
-      padding: EdgeInsets.fromLTRB(8, 0, 20, 0),
+      padding: const EdgeInsets.fromLTRB(8, 0, 20, 0),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width * .6,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             boxShadow: [
               BoxShadow(
                   color: Colors.white,
@@ -55,13 +84,31 @@ class _ProductCardState extends State<ProductCard> {
                       right: 10,
                       top: 10,
                       child: GestureDetector(
-                        onTap: null,
-                        child: Icon(Ionicons.heart_outline),
+                        onTap: () async {
+                          if (favoritesNotifire.ids.contains(widget.id)) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Favorites()));
+                          } else {
+                            favoritesNotifire.createFav({
+                              "id": widget.id,
+                              "name": widget.name,
+                              "category": widget.category,
+                              "price": widget.price,
+                              "imageUrl": widget.image,
+                            });
+                          }
+                          setState(() {});
+                        },
+                        child: favoritesNotifire.ids.contains(widget.id)
+                            ? const Icon(Ionicons.heart)
+                            : const Icon(Ionicons.heart_outline),
                       )),
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(left: 8),
+                padding: const EdgeInsets.only(left: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -79,7 +126,7 @@ class _ProductCardState extends State<ProductCard> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
+                padding: const EdgeInsets.only(left: 8, right: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -93,11 +140,11 @@ class _ProductCardState extends State<ProductCard> {
                           "colors",
                           style: appstyle(18, Colors.grey, FontWeight.w500),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         ChoiceChip(
-                          label: Text(""),
+                          label: const Text(""),
                           selected: selected,
                           visualDensity: VisualDensity.compact,
                           selectedColor: Colors.black,

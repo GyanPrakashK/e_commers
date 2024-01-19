@@ -5,9 +5,13 @@ import 'package:e_commers/Models/sneakers_models.dart';
 import 'package:e_commers/Servicers/helper.dart';
 import 'package:e_commers/Shared/appstyl.dart';
 import 'package:e_commers/Shared/home_pageWidget.dart';
+import 'package:e_commers/controllers/fave_notif.dart';
+import 'package:e_commers/controllers/product_providder.dart';
 // import 'package:e_commers/Shared/new_shoes.dart';
 // import 'package:e_commers/Shared/product_card.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 // import 'package:ionicons/ionicons.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,34 +24,41 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late final TabController _tabController =
       TabController(length: 3, vsync: this);
+  // final _favBox = Hive.box('fav_box');
 
-  late Future<List<Sneakers>> _male;
-  late Future<List<Sneakers>> _female;
-  late Future<List<Sneakers>> _kids;
+  // late Future<List<Sneakers>> _male;
+  // late Future<List<Sneakers>> _female;
+  // late Future<List<Sneakers>> _kids;
 
-  void getMale() {
-    _male = Helper().getMaleSneakers();
-  }
+  // void getMale() {
+  //   _male = Helper().getMaleSneakers();
+  // }
 
-  void getFemale() {
-    _female = Helper().getFemaleSneakers();
-  }
+  // void getFemale() {
+  //   _female = Helper().getFemaleSneakers();
+  // }
 
-  void getKids() {
-    _kids = Helper().getKidsSneakers();
-  }
+  // void getKids() {
+  //   _kids = Helper().getKidsSneakers();
+  // }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getMale();
-    getKids();
-    getFemale();
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   getMale();
+  //   getKids();
+  //   getFemale();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    var productNotifer = Provider.of<ProductNotifer>(context);
+    productNotifer.getFemale();
+    productNotifer.getKids();
+    productNotifer.getMale();
+    var favoritesNotifire = Provider.of<FavoritesNotifier>(context);
+    favoritesNotifire.getFavorites();
     return Scaffold(
         backgroundColor: const Color(0xFFE2E2E2),
         body: SizedBox(
@@ -109,16 +120,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   padding: const EdgeInsets.only(left: 12),
                   child: TabBarView(controller: _tabController, children: [
                     HomePageWidget(
-                      male: _male,
+                      male: productNotifer.male,
                       tabindex: 0,
                     ),
                     HomePageWidget(
-                      male: _female,
+                      male: productNotifer.female,
                       tabindex: 1,
                     ),
                     HomePageWidget(
-                      male: _kids,
-                     tabindex: 2,
+                      male: productNotifer.kids,
+                      tabindex: 2,
                     ),
                   ]),
                 ),
